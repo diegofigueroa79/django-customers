@@ -1,0 +1,73 @@
+{% extends "customers/index.html" %}
+
+{% block content %}
+<script>
+    function validateForm() {
+        console.log('sup')
+        let fname = document.forms["myForm"]["fname"].value.trim();
+        if (fname == "" || fname == null) {
+            alert("First name must be filled out");
+            return false;
+        }
+
+        let lname = document.forms["myForm"]["lname"].value.trim();
+        if (lname == "" || lname == null) {
+            alert("Last name must be filled out");
+            return false;
+        }
+
+        let address = document.forms["myForm"]["address"].value.trim();
+        if (address == "" || address == null) {
+            alert("Address must be filled out");
+            return false;
+        }
+
+        let city = document.forms["myForm"]["city"].value.trim();
+        if (city == "" || city == null) {
+            alert("City must be filled out");
+            return false;
+        }
+
+        let zipcode = document.forms["myForm"]["zipcode"].value.trim();
+        if (zipcode == "" || zipcode == null) {
+            alert("Zip Code must be filled out");
+            return false;
+        }
+
+        if (isNaN(zipcode)) {
+            alert("Zip Code must be a number");
+            return false;
+        }
+    }
+</script>
+
+<div class="container">
+    <div class="d-flex flex-row justify-content-center align-items-center p-5">
+        <h1>Add New Customer</h1>
+    </div>
+    <div class="d-flex flex-row justify-content-center align-items-center p-3">
+        <form name="myForm" action="{% url 'customers:register' %}" method="post" onsubmit="return validateForm()">
+        {% csrf_token %}
+            <label for="fname">First name:</label><br>
+            <input class="form-control" type="text" id="fname" name="fname" value=""><br>
+            <label for="lname">Last name:</label><br>
+            <input class="form-control" type="text" id="lname" name="lname" value=""><br>
+            <label for="fname">Address:</label><br>
+            <input class="form-control" type="text" id="address" name="address" value=""><br>
+            <label for="address">City:</label><br>
+            <input class="form-control" type="text" id="city" name="city" value=""><br>
+            <label for="city">Zip Code:</label><br>
+            <input class="form-control" type="text" id="zipcode" name="zipcode" value=""><br>
+            <label for="zipcode">State:</label><br>
+            <select class="form-control" id="state" name="state">
+                {% for state in states %}
+                <option value="{{ state.0 }}">{{ state.1 }}</option>
+                {% endfor %}
+            </select><br><br>
+            <input class="form-control btn btn-primary" type="submit" value="Submit">
+        </form>
+    </div>
+</div>
+
+
+{% endblock content %}
